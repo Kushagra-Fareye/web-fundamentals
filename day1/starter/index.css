@@ -1,0 +1,47 @@
+body{
+    background-color: antiquewhite;
+}
+
+#heading{
+    padding: 1rem;
+    text-align:center;
+}
+
+#cards {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 1rem;
+  padding : 1rem;
+}
+
+#card {
+  padding: 1rem;
+  background-color: bisque;
+  border-radius: 1rem;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  width: 25rem;
+  height: 28rem;
+}
+
+#dataFields{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#data{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 32px;
+}
+
+#image{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 160px;
+    width: 160px;
+}

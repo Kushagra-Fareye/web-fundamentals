@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { createTodo, updateTodo } from "../../Api/Todo/Todo";
 
 export default function TodoForm(props) {
+  const [id, setId] = useState(props.todo.id);
   const [title, setTitle] = useState(props.todo.title);
   const [status, setStatus] = useState(props.todo.status);
   const [body, setBody] = useState(props.todo.body);
@@ -12,6 +13,7 @@ export default function TodoForm(props) {
   const [todo, setTodo] = useState({});
 
   useEffect(() => {
+    setId(props.todo.id);
     setTitle(props.todo.title);
     setStatus(props.todo.status);
     setBody(props.todo.body);
@@ -22,6 +24,7 @@ export default function TodoForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const todo = {
+      id,
       body,
       status,
       title,

@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { createUser, updateUser } from "../../Api/User/User";
 
 export default function UserForm(props) {
+  const [id, setId] = useState(props.user.id);
   const [firstName, setFirstName] = useState(props.user.firstName);
   const [lastName, setLastName] = useState(props.user.lastName);
   const [email, setEmail] = useState(props.user.email);
@@ -10,10 +11,12 @@ export default function UserForm(props) {
   const [age, setAge] = useState(props.user.age);
   const [company, setCompany] = useState(props.user.company);
   const [password, setPassword] = useState(props.user.password);
+  const [userName, setUserName] = useState(props.user.userName);
 
   const [user, setUser] = useState({});
 
   useEffect(() => {
+    setId(props.user.id);
     setUser(props.user);
     setFirstName(props.user.firstName);
     setLastName(props.user.lastName);
@@ -22,11 +25,13 @@ export default function UserForm(props) {
     setBloodGroup(props.user.bloodGroup);
     setCompany(props.user.company);
     setPassword(props.user.password);
+    setUserName(props.user.userName);
   }, [props.user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = {
+      id,
       firstName,
       lastName,
       email,
@@ -34,6 +39,7 @@ export default function UserForm(props) {
       age,
       company,
       password,
+      userName,
     };
     setUser(user);
     user["age"] = parseInt(user.age);
@@ -106,6 +112,13 @@ export default function UserForm(props) {
           type="text"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+        />
+        <br />
+        <label for="userName">User Name: </label>
+        <input
+          type="text"
+          onChange={(e) => setUserName(e.target.value)}
+          value={userName}
         />
         <br />
         <br />

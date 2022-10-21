@@ -13,13 +13,9 @@ export async function createTodo(todo) {
 }
 
 export async function deleteTodo(todoId) {
-  return axios
-    .delete(`/delete/todo?todoId=${todoId}`)
-    .then((res) => res.status);
+  return axios.delete(`/delete/todo?todoId=${todoId}`);
 }
 
 export async function updateTodo(todoId, todo) {
-  return axios
-    .put(`/update/todo?todoId=${todoId}`, todo)
-    .then((res) => res.status);
+  return axios.put(`/update/todo?todoId=${todoId}`, todo);
 }

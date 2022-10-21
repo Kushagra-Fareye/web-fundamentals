@@ -9,7 +9,7 @@ export async function getUser(userId) {
 }
 
 export async function createUser(user) {
-  return axios.post("/user", user).then((data) => data.json());
+  return axios.post("/user", user);
 }
 
 export async function deleteUser(userId) {

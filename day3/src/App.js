@@ -1,60 +1,50 @@
-import { Button } from "antd";
-import React, { useState } from "react";
-import { TodoForm, UserForm, DisplayTodos, DisplayUsers } from "./Components";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Route, Routes } from "react-router";
+import { Link } from "react-router-dom";
+import { ErrorPage, Home, LoginPage, TodoPage, User } from "./Pages";
 
 export default function App() {
-  const [name, setName] = useState("");
-  const [openUserFormModal, toggleUserFormModal] = useState(false);
-  const [openTodoFormModal, toggleTodoFormModal] = useState(false);
-  const [userFormData, setUserFormData] = useState({});
-  const [todoFormData, setTodoFormData] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleModalClose = () => {
-    toggleUserFormModal(false);
-    setUserFormData({});
-  };
-
-  const handleTodoModalClose = () => {
-    toggleTodoFormModal(false);
-    setTodoFormData({});
-  };
-
-  const handleOpenUserFormModal = (userData) => {
-    setUserFormData(userData);
-    toggleUserFormModal(true);
-  };
-
-  const handleOpenTodoFormModal = (todoData) => {
-    setTodoFormData(todoData);
-    toggleTodoFormModal(true);
-  };
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    const password = localStorage.getItem("password");
+    axios
+      .post(`/login?username=${username}&password=${password}`)
+      .then((_) => {
+        setIsLoggedIn(true);
+      })
+      .catch((e) => {
+        setIsLoggedIn(false);
+      });
+  }, []);
 
   return (
-    <div>
-      <input type="text" onChange={(e) => setName(e.target.value)} />
-      <h1>{`Hello ${name}, Welcome to FarEye!`}</h1>
-      <br />
-      <br />
-      <Button onClick={() => toggleUserFormModal(true)}>Add User</Button>
-      <br />
-      <UserForm
-        openUserFormModal={openUserFormModal}
-        handleModalClose={handleModalClose}
-        user={userFormData}
-      />
-
-      <br />
-      <Button onClick={() => toggleTodoFormModal(true)}>Add Todo</Button>
-      <br />
-      <TodoForm
-        openTodoFormModal={openTodoFormModal}
-        handleTodoModalClose={handleTodoModalClose}
-        todo={todoFormData}
-      />
-      <br />
-      <DisplayTodos handleOpenTodoFormModal={handleOpenTodoFormModal} />
-      <br />
-      <DisplayUsers handleOpenUserFormModal={handleOpenUserFormModal} />
-    </div>
+    <>
+      {!isLoggedIn ? (
+        <LoginPage setIsLoggedIn={setIsLoggedIn} />
+      ) : (
+        <>
+          <nav>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+            <li>
+              <Link to="/todos">Todos</Link>
+            </li>
+          </nav>
+          <Routes>
+            <Route path="/users" element={<User />} />
+            <Route path="/todos" element={<TodoPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </>
+      )}
+    </>
   );
 }

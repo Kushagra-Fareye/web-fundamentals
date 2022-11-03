@@ -6,6 +6,7 @@ export default function DisplayUsers(props) {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     getUsers().then((data) => setUsers(data));
+    console.log(users);
   }, [users]);
 
   const deleteUserData = async (user) => {
